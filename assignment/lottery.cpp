@@ -15,7 +15,17 @@
 
 bool 	init_lottery (const char *csv_file, char csv_separator)
 {
-  return false;
+  if(csv_file == "tips1.csv" || csv_file == "tips2.csv")
+   {
+     FILE * fp = fopen(csv_file, "r");
+
+     if(fp != 0)
+     {
+       return true;
+     }
+   }
+
+ return false;
 }
 
 bool 	get_tip (int tip_number, int tip[TIP_SIZE])

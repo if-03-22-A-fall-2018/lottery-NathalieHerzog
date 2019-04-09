@@ -12,6 +12,7 @@
  */
 #ifndef ___LOTTERY_H
 #define ___LOTTERY_H
+#include "general.h"
 
 #define 	TIP_SIZE   6
 
