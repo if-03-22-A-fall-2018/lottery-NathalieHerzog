@@ -20,6 +20,7 @@
 
 FILE *fp;
 char sep;
+int drawing[TIP_SIZE];
 
 bool init_lottery(const char *csv_file, char csv_separator)
 {
@@ -89,12 +90,27 @@ bool get_tip(int tip_number, int tip[TIP_SIZE])
 
 bool set_drawing(int drawing_numbers[TIP_SIZE])
 {
-  return false;
+  for(int i = 0; i < TIP_SIZE; i++)
+  {
+    if(drawing_numbers[i] < 1 || drawing_numbers[i] > 45)
+    {
+      return false;
+    }
+
+    drawing[i] = drawing_numbers[i];
+  }
+
+  return true;  
 }
 
 int get_tip_result(int tip_number)
 {
-  return 0;
+  if(drawing[0] == 0)
+  {
+    return -1;
+  }
+
+  if()
 }
 
 int get_right_tips_count(int right_digits_count)
