@@ -49,7 +49,7 @@ bool get_tip(int tip_number, int tip[TIP_SIZE])
 
   fseek(fp, 0 , SEEK_SET);
 
-    for(int i = 0; i <= tip_number; i++)
+  for(int i = 0; i <= tip_number; i++)
   {
     if(fgets(line, MAX_LINE_LEN, fp) == 0)
     {
@@ -70,7 +70,7 @@ bool get_tip(int tip_number, int tip[TIP_SIZE])
   {
     if(line[i] != sep && line[i] != '\0' && line[i] != '\n')
     {
-      if(line[i+1] == sep)
+      if(line[i+1] == sep || line[i+1] == '\0' || line[i+1] == '\n')
       {
         tip[tipIndex] = num + line[i] - '0';
         num = 0;
