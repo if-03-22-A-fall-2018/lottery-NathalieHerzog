@@ -27,6 +27,11 @@ bool init_lottery(const char *csv_file, char csv_separator)
   fp = fopen(csv_file, "r");
   sep = csv_separator;
 
+  for (int i = 0; i < TIP_SIZE; i++)
+  {
+    drawing[i] = 0;
+  }
+
   if (fp != 0)
   {
     return true;
