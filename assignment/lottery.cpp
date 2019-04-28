@@ -37,7 +37,7 @@ bool init_lottery(const char *csv_file, char csv_separator)
 
 bool get_tip(int tip_number, int tip[TIP_SIZE])
 {
-  if(tip_number < 0)
+  if (tip_number < 0)
   {
     return false;
   }
@@ -48,30 +48,30 @@ bool get_tip(int tip_number, int tip[TIP_SIZE])
   int start = 0;
   int count = 0;
 
-  fseek(fp, 0 , SEEK_SET);
+  fseek(fp, 0, SEEK_SET);
 
-  for(int i = 0; i <= tip_number; i++)
+  for (int i = 0; i <= tip_number; i++)
   {
-    if(fgets(line, MAX_LINE_LEN, fp) == 0)
+    if (fgets(line, MAX_LINE_LEN, fp) == 0)
     {
       return false;
     }
   }
 
-  for(int i = 0; i < MAX_LINE_LEN; i++)
+  for (int i = 0; i < MAX_LINE_LEN; i++)
   {
-    if(count == 0 && (line[i] == sep || line[i] == '\0' || line[i] == '\n'))
+    if (count == 0 && (line[i] == sep || line[i] == '\0' || line[i] == '\n'))
     {
       start = i;
       count++;
     }
   }
 
-  for(int i = start; i < MAX_LINE_LEN; i++)
+  for (int i = start; i < MAX_LINE_LEN; i++)
   {
-    if(line[i] != sep && line[i] != '\0' && line[i] != '\n')
+    if (line[i] != sep && line[i] != '\0' && line[i] != '\n')
     {
-      if(line[i+1] == sep || line[i+1] == '\0' || line[i+1] == '\n')
+      if (line[i + 1] == sep || line[i + 1] == '\0' || line[i + 1] == '\n')
       {
         tip[tipIndex] = num + line[i] - '0';
         num = 0;
@@ -81,7 +81,7 @@ bool get_tip(int tip_number, int tip[TIP_SIZE])
       {
         num += line[i] - '0';
         num *= 10;
-      }     
+      }
     }
   }
 
@@ -90,9 +90,9 @@ bool get_tip(int tip_number, int tip[TIP_SIZE])
 
 bool set_drawing(int drawing_numbers[TIP_SIZE])
 {
-  for(int i = 0; i < TIP_SIZE; i++)
+  for (int i = 0; i < TIP_SIZE; i++)
   {
-    if(drawing_numbers[i] < 1 || drawing_numbers[i] > 45)
+    if (drawing_numbers[i] < 1 || drawing_numbers[i] > 45)
     {
       return false;
     }
@@ -100,20 +100,62 @@ bool set_drawing(int drawing_numbers[TIP_SIZE])
     drawing[i] = drawing_numbers[i];
   }
 
-  return true;  
+  return true;
 }
 
 int get_tip_result(int tip_number)
 {
-  if(drawing[0] == 0)
+  if (drawing[0] == 0)
   {
     return -1;
   }
 
-  if()
+  int tip[TIP_SIZE];
+
+  if (!get_tip(tip_number, tip))
+  {
+    return -2;
+  }
+
+  int count = 0;
+
+  for (int u = 0; u < TIP_SIZE; u++)
+  {
+    for (int i = 0; i < TIP_SIZE; i++)
+    {
+      if (tip[u] == drawing[i])
+      {
+        count++;
+      }
+    }
+  }
+
+  return count;
 }
 
 int get_right_tips_count(int right_digits_count)
 {
-  return 0;
+  if (right_digits_count > TIP_SIZE || right_digits_count < 0 || drawing[0] == 0)
+  {
+    return -1;
+  }
+
+  int count = 0;
+  char line[MAX_LINE_LEN];
+
+  fseek(fp, 0, SEEK_SET);
+
+  for (int i = 0; i < 1000000; i++)
+  {
+    if (right_digits_count == get_tip_result(i))
+    {
+      count++;
+    }
+    if (fgets(line, MAX_LINE_LEN, fp) == 0)
+    {
+      return count;
+    }
+  }
+
+  return count;
 }
